@@ -92,8 +92,12 @@ VideoBrowser.prototype.GenerateLayout = function() {
 	this.BrowserWindow.style.width = "1100px";
 	this.BrowserWindow.style.height = "700px";
 	this.BrowserWindow.style.margin = "55px 0px 0px 300px";
+	this.BrowserWindow.style.overflow = "auto";
+
+	this.VideoBrowserMaker();
 
 	this.Container.appendChild(this.BrowserWindow);
+	
 
 	//Return to Menu Button...
 	this.RBdiv = document.createElement('div');
@@ -149,5 +153,29 @@ VideoBrowser.prototype.create = function(obj, func){
     f.target = obj;
     f.func = func;
     return f;
+}
+
+VideoBrowser.prototype.VideoBrowserMaker = function() {
+
+	var VideoTable = new Table("VideoTable");
+ 
+	VideoTable.ColumnHeaders(FileList.List[0]);
+ 
+	for(var i=0; i<FileList.List.length; i++) {
+		var obj = FileList.List[i];
+		VideoTable.AddRow(obj);
+ 
+	}
+ 
+	VideoTable.Table.rows[0].style.backgroundColor = 'white';
+ 
+	for(var i = 0; i<VideoTable.Table.rows[0].cells.length; i++) {
+		VideoTable.Table.rows[0].cells[i].style.width = "200px";
+	} 
+
+	VideoTable.AddStreamButton();
+ 
+	this.BrowserWindow.appendChild(VideoTable.ReturnTable());
+ 
 }
 
